@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateFullName, updateBio } from '../../features/user/userSlice';
+import { useUser } from '../../context/UserContext';
 import './ProfilePage.css';
 
 const ProfilePage = () => {
-  const { fullName, bio } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-
-  const [newFullName, setNewFullName] = useState(fullName);
-  const [newBio, setNewBio] = useState(bio);
+  const { user, updateFullName, updateBio } = useUser();
+  const [newFullName, setNewFullName] = useState(user.fullName);
+  const [newBio, setNewBio] = useState(user.bio);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateFullName(newFullName));
-    dispatch(updateBio(newBio));
+    updateFullName(newFullName);
+    updateBio(newBio);
   };
 
   return (
     <div className="profile-container">
-      <h1>Hello {fullName.split(" ")[0]}!</h1>
-      <h2>Profile Settings</h2>
+      <h1>Profile Settings</h1>
       <form className="form" onSubmit={handleSubmit}>
         <label>Full Name:</label>
         <input

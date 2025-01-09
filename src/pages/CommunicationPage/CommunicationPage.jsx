@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateEmail, updatePhoneNumber } from '../../features/user/userSlice';
+import { useUser } from '../../context/UserContext';
 import './CommunicationPage.css';
 
 const CommunicationPage = () => {
-  const { email, phoneNumber } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-
-  const [newEmail, setNewEmail] = useState(email);
-  const [newPhoneNumber, setNewPhoneNumber] = useState(phoneNumber);
+  const { user, updateEmail, updatePhoneNumber } = useUser();
+  const [newEmail, setNewEmail] = useState(user.email);
+  const [newPhoneNumber, setNewPhoneNumber] = useState(user.phoneNumber);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateEmail(newEmail));
-    dispatch(updatePhoneNumber(newPhoneNumber));
+    updateEmail(newEmail);
+    updatePhoneNumber(newPhoneNumber);
   };
 
   return (
